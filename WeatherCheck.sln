@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrostWarningSweden", "FrostWarningSweden\FrostWarningSweden.csproj", "{9381E749-E4C4-4F6D-BB7A-E3C6BD570F11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiCaller", "ApiCaller\ApiCaller.csproj", "{251EF1A3-5656-4263-9E9E-E14BA4C13E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCaller", "ApiCaller\ApiCaller.csproj", "{251EF1A3-5656-4263-9E9E-E14BA4C13E39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

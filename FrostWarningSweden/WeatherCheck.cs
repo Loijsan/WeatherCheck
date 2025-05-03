@@ -21,7 +21,7 @@ namespace FrostWarningSweden
 
             Caller caller = new();
             
-            caller.TempCaller(latitude, longitude);
+            string result = caller.TempCaller(latitude, longitude).ToString();
 
             // Give the push to pushover - how is this done?
         }
