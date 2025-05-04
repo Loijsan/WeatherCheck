@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using ApiCaller;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
@@ -9,7 +10,7 @@ namespace FrostWarningSweden
     public class WeatherCheck
     {
         [FunctionName("WeatherCheck")]
-        public void Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
+        public async Task RunAsync([TimerTrigger("0 0 18 * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
@@ -18,12 +19,19 @@ namespace FrostWarningSweden
             // Save our home position
             string latitude = "57.844579";
             string longitude = "11.896699";
-
             Caller caller = new();
-            
-            string result = caller.TempCaller(latitude, longitude).ToString();
 
-            // Give the push to pushover - how is this done?
+            string result = caller.TempCaller(latitude, longitude).GetAwaiter().GetResult();
+            //Console.WriteLine(result);
+
+            // Pushover
+            string pushoverAppToken = Environment.GetEnvironmentVariable("PUSHOVER_APP_TOKEN");
+            string pushoverUserKey = Environment.GetEnvironmentVariable("PUSHOVER_USER_KEY");
+
+            NotificationSender sender = new(pushoverAppToken, pushoverUserKey);
+            await sender.SendPushNotification("Vädervarning", result);
+
         }
+
     }
 }
