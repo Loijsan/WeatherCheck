@@ -1,0 +1,36 @@
+name: Deploy Azure Function with OIDC
+
+on:
+  push:
+    branches:
+      - master  # byt till din branch om du använder något annat
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'  # eller 6.0 beroende på din Function-version
+
+    - name: Login to Azure using OIDC
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Publish Azure Function
+      uses: azure/functions-action@v1
+      with:
+        app-name: weatherwarningformyhome  # byt till ditt app-namn
+        package: '.'
