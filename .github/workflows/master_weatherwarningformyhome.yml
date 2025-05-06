@@ -40,4 +40,4 @@ jobs:
           app-name: 'WeatherWarningForMyHome'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C09583826E9C4CC5B46654D51F913F3C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EDA29E73AF6E47229B4F969C1655AFDB }}
