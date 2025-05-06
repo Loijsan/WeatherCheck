@@ -16,10 +16,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
-
+    
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
@@ -36,13 +33,6 @@ jobs:
           dotnet build --configuration Release --output ./output
           popd
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_695F9A7B8AE546CC961E7F8FFFB70253 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F01E0C2153E7402698C166D45E3516FC }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D9EB5FBDF64F4F26A02B39D9A8AC7A4D }}
-
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
@@ -50,4 +40,4 @@ jobs:
           app-name: 'WeatherWarningForMyHome'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C09583826E9C4CC5B46654D51F913F3C }}
