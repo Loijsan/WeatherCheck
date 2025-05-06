@@ -10,12 +10,12 @@ namespace FrostWarningSweden
     public class WeatherCheck
     {
         [FunctionName("WeatherCheck")]
-        public async Task RunAsync([TimerTrigger("0 0 18 * * *")]TimerInfo myTimer, ILogger log)
+        public async Task RunAsync([TimerTrigger("0 0 16 * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
             // 0 */1 * * * * - every minute - for testing purpose
-            // 0 0 18 * * * - at 18 every day
+            // 0 0 18 * * * - at 18 every day - well, that is UTC... I want SE and summertime, so 16...
             // Save our home position
             string latitude = "57.844579";
             string longitude = "11.896699";
