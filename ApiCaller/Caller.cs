@@ -30,9 +30,53 @@ namespace ApiCaller
                 .Where(p => p.name == "t")
                 .SelectMany(p => p.values)
                 .Min();
+            
+            // TODO - add a check for rain, and the quantity?
 
-            return "Lägsta temp kommande 15 h är: " + lowestTemp.ToString() + "C.";
+            //Decide what answer to send
+            //string answer = ReplyMaker(lowestTemp);
+
+            //return "Lägsta temp kommande 15 h är: " + lowestTemp.ToString() + "C.";
+            return ReplyMaker(lowestTemp);
         }
+        /// <summary>
+        /// Decides what answer to send based on the lowest temperature.
+        /// </summary>
+        /// <param name="lowestTemp"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private string ReplyMaker(double lowestTemp)
+        {
+            if (lowestTemp < 0.0)
+            {
+                return "Garanterat frost inatt, lägsta temp är " + lowestTemp;
+            }
+            if (lowestTemp < 2.0)
+            {
+                return "Nästan garanterat frost inatt, lägsta temp är " + lowestTemp;
+            }
+            if (lowestTemp < 4.0)
+            {
+                return "Det finns en viss risk för frost inatt, lägsta temp är" + lowestTemp;
+            }
+            if (lowestTemp < 10.0)
+            {
+                return "Ingen större frostrisk, lägsta temp är " + lowestTemp;
+            }
+            if (lowestTemp < 20.0)
+            {
+                return "Mild natt, lägsta temp är " + lowestTemp;
+            }
+            if (lowestTemp > 20.0)
+            {
+                return "Varm natt, lägsta temp är " + lowestTemp;
+            }
+            else
+            {
+                return "Lägsta temp kommande 15 h är: " + lowestTemp.ToString() + "C.";
+            }
+        }
+
         /// <summary>
         /// Makes the API call to the SMHI API.
         /// </summary>
